@@ -64,15 +64,16 @@ namespace astAttempt.Controllers
 
             return View(employee);
         }
-        
+
         // GET: Employees/Create
+        [Authorize(Roles = "Admin")]
         [Route("create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("create")]
@@ -91,7 +92,7 @@ namespace astAttempt.Controllers
                 _context.UserMasters.Add(model);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Details));
+                return RedirectToAction(nameof(Index));
             }
 
             return View(employee);

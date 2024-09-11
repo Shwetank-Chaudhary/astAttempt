@@ -20,6 +20,7 @@ namespace astAttempt.Controllers
     public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        public string email_public;
             
 
         public CustomersController(ApplicationDbContext context)
@@ -61,7 +62,7 @@ namespace astAttempt.Controllers
             {
                 return NotFound();
             }
-
+            email_public = CustomerName;
             return View(customer);
         }
 
@@ -84,13 +85,26 @@ namespace astAttempt.Controllers
 
         [HttpPost]
         [Route("Home")]
+        public async Task<IActionResult> Home([FromBody] string? CustomerEmail)
+        {
+
+            Customer customer = _context.Customers.SingleOrDefault(c => (c.CustomerEmail == CustomerEmail));
+            if (customer == null)
+            {
+                return NotFound("Customer Not Found");
+            }
+
+            return View(customer);
+        }
+        [HttpGet]
+        [Route("Home")]
         public async Task<IActionResult> Home()
         {
 
-            Customer customer = _context.Customers.SingleOrDefault(c => (c.CustomerEmail == HttpContext.Session.GetString("UserId")));
+            Customer customer = _context.Customers.SingleOrDefault(c => c.CustomerEmail == email_public);
             if (customer == null)
             {
-                return NotFound(HttpContext.Session.GetString("UserId"));
+                return NotFound($"{email_public}");
             }
 
             return View(customer);
@@ -118,7 +132,7 @@ namespace astAttempt.Controllers
                 await _context.SaveChangesAsync();
 
                 HttpContext.Session.SetString("UserId",customer.CustomerEmail);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Home", "customers");
             }
             ViewData["CityId"] = new SelectList(_context.Citys, "CityId", "CityId", customer.CityId);
             return View(customer);
@@ -130,13 +144,13 @@ namespace astAttempt.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
             {
-                return NotFound();
+                return NotFound("Customer Not Found__UPDATE");
             }
             ViewData["CityId"] = new SelectList(_context.Citys, "CityId", "CityId", customer.CityId);
             return View(customer);
@@ -195,10 +209,17 @@ namespace astAttempt.Controllers
             {
                 return BadRequest();
             }
-
+            UserMaster user = new UserMaster()
+            {
+                UserID = cust.CustomerId.ToString(),
+                UserName = cust.CustomerEmail,
+                UserPassword = cust.Password,
+                UserType = cust.Role
+            };
             _context.Customers.Remove(cust);
+            _context.UserMasters.Remove(user);
             _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Home");
         }
 
         // POST: Customers/Delete/5

@@ -45,6 +45,7 @@ namespace astAttempt
                 options.IdleTimeout = TimeSpan.FromMinutes(8);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
+                options.Cookie.Domain = ".";
             });
 
 
