@@ -51,7 +51,8 @@ namespace astAttempt.Controllers
         //}
 
 
-        [HttpPost]
+        [Authorize(Roles="Customer")]
+        [HttpGet]
         [Route("show")]
         public async Task<IActionResult> Details([FromForm] string CustomerName, [FromForm] string Password)
         {
@@ -65,6 +66,19 @@ namespace astAttempt.Controllers
             return View(customer);
         }
 
+        //[HttpGet]
+        //[Route("show")]
+        //public async Task<IActionResult> Details()
+        //{
+        //    int? id = HttpContext.Session.GetInt32("UserId");
+        //    Customer customer = _context.Customers.SingleOrDefault(c => c.CustomerId  == id);
+        //    if (customer == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(customer);
+        //}
 
 
         [HttpGet]
@@ -143,7 +157,8 @@ namespace astAttempt.Controllers
         }
 
         // POST: Customers/Edit/5
-        
+
+        [Authorize(Roles ="Employee, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("update/{id?}")]
@@ -175,7 +190,7 @@ namespace astAttempt.Controllers
                         throw;
                     }
                 }
-                //return RedirectToAction(nameof(Customer_Dashboard),customer.CustomerEmail);
+                return RedirectToAction(nameof(Details),customer.CustomerEmail);
             }
             ViewData["CityId"] = new SelectList(_context.Citys, "CityId", "CityId", customer.CityId);
             return RedirectToAction("Home","customers");

@@ -52,7 +52,7 @@ namespace astAttempt.Controllers
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimsIdentity));
-
+                    HttpContext.Session.SetString("UserID", employee.UserID);
                     return RedirectToAction("Details", "Employee", new { id = employee.UserID });
                 }
                 else
