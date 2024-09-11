@@ -24,6 +24,10 @@ namespace astAttempt.Models.Entity
 
         public required string Password { get; set; }
 
+        public string Role { get; set; } = "Employee";
+
+        public required string EmpEmail { get; set; }
+
         //public string UserId { get; set; }
 
         //[ForeignKey("UserId")]

@@ -1,31 +1,11 @@
-﻿@model astAttempt.Models.Entity.Customer
+﻿@model astAttempt.Models.Entity.Employee
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Login as Admin";
 }
 @{
     Layout = null;
 }
 
-@* <h2>@ViewData["Title"]</h2> *@
-@* <link rel="stylesheet" href="/css/Register.css" asp-append-version="true" />
-
-
-<div class="tabs">
-    <div class="tab active" onclick="showForm('login')">Login</div>
-    <div class="tab" onclick="showForm('register')">Register</div>
-</div>
-<form asp-action="Login" method="post" class="form active" >
-    <div>
-        <label asp-for="CustomerName"></label>
-        <input asp-for="CustomerName" type="text" />
-    </div>
-    <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" />
-    </div>
-    <button type="submit">Login</button>
-</form>
-<script src="/js/js_LoginandRegistration.js"></script> *@
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,41 +19,22 @@
     <div class="container">
         <h1>Welcome</h1>
         <div class="tabs">
-            <div class="tab active" onclick="showForm('login')">Login</div>
-            <div class="tab" onclick="showForm('register')">Register</div>
+            <div class="tab active" onclick="showForm('login')"><h2>Login</h2></div>
+            @* <div class="tab" onclick="showForm('register')">Register</div> *@
         </div>
-        <form  class="form active" asp-action="Login" method="post">
+        <form class="form active" asp-controller="account" asp-action="login" method="post">
             <div class="form-group">
-                <label label asp-for="CustomerName">Email:</label>
-                <input type="text" id="loginEmail" asp-for="CustomerName" required>
+                <label label asp-for="EmpEmail">Email:</label>
+                <input type="text" id="loginEmail" asp-for="EmpEmail" required>
             </div>
             <div class="form-group">
                 <label asp-for="Password">Password:</label>
-                <input type="password"  asp-for="Password" required>
+                <input type="password" asp-for="Password" required>
             </div>
             <button type="submit">Login</button>
         </form>
-        <form id="registerForm" class="form">
-            <div class="form-group">
-                <label for="regUsername">Username:</label>
-                <input type="text" id="regUsername" required>
-            </div>
-            <div class="form-group">
-                <label for="regEmail">Email:</label>
-                <input type="email" id="regEmail" required>
-            </div>
-            <div class="form-group">
-                <label for="regCity">City:</label>
-                <input type="text" id="regCity" required>
-            </div>
-            <div class="form-group">
-                <label for="regPassword">Password:</label>
-                <input type="password" id="regPassword" required>
-            </div>
-            <button type="submit">Register</button>
-        </form>
-    </div>
 
-    <script src="/js/js_LoginandRegistration.js"></script>
+
+    </div>
 </body>
 </html>

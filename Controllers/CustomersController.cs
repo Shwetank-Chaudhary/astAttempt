@@ -8,13 +8,15 @@ using Microsoft.EntityFrameworkCore;
 using astAttempt.Data;
 using astAttempt.Models.Entity;
 using Microsoft.AspNetCore.Identity;
+using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Authorization;
 //using NuGet.Versioning;
 //using Newtonsoft.Json.Linq;
 
 namespace astAttempt.Controllers
 {
     [ApiController]
-    [Route("/api/[Controller]")]
+    [Route("/[Controller]")]
     public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -34,13 +36,12 @@ namespace astAttempt.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-
-
         //[HttpGet]
-        //[Route("showall/{id}")]
-        //public async Task<IActionResult> Detail(int? id)
+        //[Route("show/{email}")]
+        //public async Task<IActionResult> Details()
         //{
-        //    Customer customer = _context.Customers.SingleOrDefault(c => c.CustomerId == id);
+        //    string email = Request.Headers["CustomerName"].ToString();
+        //    Customer customer = _context.Customers.SingleOrDefault(c => (c.CustomerEmail == email));
         //    if (customer == null)
         //    {
         //        return NotFound();
@@ -49,22 +50,22 @@ namespace astAttempt.Controllers
         //    return View(customer);
         //}
 
-        [HttpGet]
+
+        [HttpPost]
         [Route("show")]
-        public async Task<IActionResult> Details()
+        public async Task<IActionResult> Details([FromForm] string CustomerName, [FromForm] string Password)
         {
-            string email = HttpContext.Session.GetString("UserId");
-            var customer = await _context.Customers
-                .Include(c => c.City)
-                .FirstOrDefaultAsync(m => m.CustomerEmail == email);
-            
+
+            Customer customer = _context.Customers.SingleOrDefault(c => (c.CustomerEmail == CustomerName) && (c.Password == Password));
             if (customer == null)
             {
-                return Redirect("Create");
+                return NotFound();
             }
 
-            return View(email);
+            return View(customer);
         }
+
+
 
         [HttpGet]
         [Route("create")]
@@ -81,7 +82,20 @@ namespace astAttempt.Controllers
             return View();
         }
 
-       
+        [HttpPost]
+        [Route("Home")]
+        public async Task<IActionResult> Home()
+        {
+
+            Customer customer = _context.Customers.SingleOrDefault(c => (c.CustomerEmail == HttpContext.Session.GetString("UserId")));
+            if (customer == null)
+            {
+                return NotFound(HttpContext.Session.GetString("UserId"));
+            }
+
+            return View(customer);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("create")]
@@ -89,10 +103,21 @@ namespace astAttempt.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (customer.CustomerEmail != HttpContext.Session.GetString("UserId"))
-                    return BadRequest("Email Mismatched");
+                if (customer == null) {
+                    return BadRequest();
+                }
                 _context.Add(customer);
+                UserMaster model = new UserMaster()
+                {
+                    UserID = customer.CustomerId.ToString(),
+                    UserName = customer.CustomerEmail,
+                    UserPassword = customer.Password,
+                    UserType = customer.Role
+                };
+                _context.UserMasters.Add(model);
                 await _context.SaveChangesAsync();
+
+                HttpContext.Session.SetString("UserId",customer.CustomerEmail);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CityId"] = new SelectList(_context.Citys, "CityId", "CityId", customer.CityId);
@@ -118,6 +143,7 @@ namespace astAttempt.Controllers
         }
 
         // POST: Customers/Edit/5
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("update/{id?}")]
@@ -132,7 +158,10 @@ namespace astAttempt.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    var cust = _context.Customers.Find(id);
+                    cust.CustomerName = customer.CustomerName;
+                    cust.CustomerPhone = customer.CustomerPhone;
+                    _context.Update(cust);
                      _context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -146,10 +175,10 @@ namespace astAttempt.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Customer_Dashboard),customer.CustomerEmail);
             }
             ViewData["CityId"] = new SelectList(_context.Citys, "CityId", "CityId", customer.CityId);
-            return View(customer);
+            return RedirectToAction("Home","customers");
         }
 
         [HttpGet]

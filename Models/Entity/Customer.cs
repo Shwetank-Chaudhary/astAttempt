@@ -17,5 +17,7 @@ namespace astAttempt.Models.Entity
         public int CityId { get; set; }
 
         public City? City { get; set; }
+
+        public string Role { get; set; } = "User";
     }
 }

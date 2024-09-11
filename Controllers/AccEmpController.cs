@@ -11,7 +11,11 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace astAttempt.Controllers
+
 {
+
+    [ApiController]
+    [Route("/api/[Controller]")]
     public class AccEmpController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,6 +26,7 @@ namespace astAttempt.Controllers
         }
 
         [HttpGet]
+        [Route("login")]
         public IActionResult LoginEmp()
         {
             return View();

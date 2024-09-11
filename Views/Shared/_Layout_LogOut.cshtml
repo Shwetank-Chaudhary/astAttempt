@@ -25,12 +25,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
+                       @*  <li class="nav-item">
                             <a class="nav-link text-dark" href="/api/Customers/Create">Register</a>
-                        </li>
+                        </li> *@
                         <li class="nav-item">
-                            @* <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a> *@
-                            <a class="nav-link text-dark" href="/api/custLogin/login">Login</a>
+                            <div class="dropdown">
+                                <button class="dropbtn">Login As</button>
+                                <div class="dropdown-content">
+                                    <a href="/api/custLogin/login">Customers</a>
+                                    <a href="/api/AccEmp/login">Employees</a>
+                                    <a href="/api/account/login">Admin</a>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -51,6 +57,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -24,38 +24,19 @@ namespace astAttempt.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult>Login(LoginViewModel model)
+        public async Task<IActionResult> Login([FromForm]string EmpEmail, [FromForm]string Password)
         {
-            //// Validate credentials and set authentication cookie
-            //if (CustomerName == "admin" && password == "password") // Example validation
-            //{
-            //    var claims = new[]
-            //    {
-            //    new Claim(ClaimTypes.Name, CustomerName),
-            //    new Claim(ClaimTypes.Role, "Admin")
-            //};
-
-            //    var identity = new ClaimsIdentity(claims, "CustomAuthScheme");
-            //    var principal = new ClaimsPrincipal(identity);
-
-            //    HttpContext.SignInAsync("CustomAuthScheme", principal);
-
-            //    return RedirectToAction("Index", "Home");
-            //}
-            //ViewBag.Username = CustomerName;
-            //ViewBag.Password = password;
-            //ModelState.AddModelError("", "Invalid login attempt.");
-            //return View();
-
+            LoginViewModel model = new LoginViewModel() { UserName = EmpEmail, Password = Password };
             if (ModelState.IsValid)
             {
                 if (model.Password == "password" && model.UserName == "admin")
                 {
+
                     var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, model.UserName),
-                new Claim(ClaimTypes.Role, "Admin")
-            };
+                    {
+                        new Claim(ClaimTypes.Name, model.UserName),
+                        new Claim(ClaimTypes.Role, "Admin")
+                    };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -67,7 +48,7 @@ namespace astAttempt.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimsIdentity), authProperties);
 
-                    return RedirectToAction("Dashboard", "AdminDashboard");
+                    return RedirectToAction("show", "Admin");
                 }
                 else
                 {
