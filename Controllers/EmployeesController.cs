@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace astAttempt.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("[Controller]")]
     public class EmployeesController : Controller
@@ -64,15 +64,16 @@ namespace astAttempt.Controllers
 
             return View(employee);
         }
-        
+
         // GET: Employees/Create
+        [Authorize(Roles = "Admin")]
         [Route("create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("create")]
@@ -98,7 +99,7 @@ namespace astAttempt.Controllers
         }
 
         // GET: Employees/Update/5
-        //[Authorize(Roles = "Employee, Admin")]
+        [Authorize(Roles = "Employee, Admin")]
         [HttpGet]
         [Route("update/{id?}")]
         public async Task<IActionResult> Edit(int? id)
@@ -117,7 +118,7 @@ namespace astAttempt.Controllers
         }
 
         
-        //[Authorize(Roles = "Employee, Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("update/{id?}")]
@@ -138,6 +139,7 @@ namespace astAttempt.Controllers
         }
 
         // GET: Employees/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("delete/{id?}")]
         public async Task<IActionResult> Delete(int? id)
@@ -159,6 +161,7 @@ namespace astAttempt.Controllers
         }
 
         // POST: Employees/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         //[ValidateAntiForgeryToken]
         [Route("delete")]
