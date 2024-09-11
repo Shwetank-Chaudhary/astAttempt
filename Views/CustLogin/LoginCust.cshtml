@@ -1,0 +1,62 @@
+﻿@model astAttempt.Models.Entity.Customer
+@{
+    ViewData["Title"] = "Login";
+}
+@{
+    Layout = null;
+}
+
+@* <h2>@ViewData["Title"]</h2> *@
+@* <link rel="stylesheet" href="/css/Register.css" asp-append-version="true" />
+
+
+<div class="tabs">
+    <div class="tab active" onclick="showForm('login')">Login</div>
+    <div class="tab" onclick="showForm('register')">Register</div>
+</div>
+<form asp-action="Login" method="post" class="form active" >
+    <div>
+        <label asp-for="CustomerName"></label>
+        <input asp-for="CustomerName" type="text" />
+    </div>
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" />
+    </div>
+    <button type="submit">Login</button>
+</form>
+<script src="/js/js_LoginandRegistration.js"></script> *@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Registration</title>
+    <link rel="stylesheet" href="/css/Register.css" asp-append-version="true" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome</h1>
+        <div class="tabs">
+            <div class="tab active" onclick="showForm('login')"><h2>Login</h2></div>
+            @* <div class="tab" onclick="showForm('register')">Register</div> *@
+        </div>
+        <form class="form active" asp-action="Login" method="post">
+            <div class="form-group">
+                <label label asp-for="CustomerName">Email:</label>
+                <input type="text" id="loginEmail" asp-for="CustomerName" required>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password">Password:</label>
+                <input type="password" asp-for="Password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <div>
+            <a href="https://localhost:7262/api/customers/create">Register a new user</a>
+        </div>
+        
+    </div>
+</body>
+</html>

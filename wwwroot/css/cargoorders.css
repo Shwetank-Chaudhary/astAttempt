@@ -1,0 +1,224 @@
+/* General Page Layout */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 2rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure body takes at least the full height of the viewport */
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding-bottom: 5px; /* Add padding at the bottom to ensure space for the footer */
+}
+
+/* Header Styles */
+h1 {
+    color: #343a40;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center; /* Center align the header */
+}
+
+h4 {
+    color: #6c757d;
+    text-align: center; /* Center align the sub-header */
+}
+
+hr {
+    margin: 20px auto;
+    width: 80%; /* Center align the horizontal rule */
+}
+
+/* Form Container */
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.col-md-4 {
+    max-width: 600px;
+    width: 100%;
+    margin-bottom: 3rem;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    color: #495057;
+}
+
+input.form-control,
+select.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px; /* Add space below the button */
+}
+
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+/* Validation Messages */
+.text-danger {
+    color: #dc3545;
+    font-size: 14px;
+}
+
+/* Back to List Link */
+a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+    margin-top: 20px; /* Add space above the link */
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .col-md-4 {
+        width: 90%;
+        padding: 10px;
+    }
+
+    input[type="submit"] {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    a {
+        font-size: 14px;
+    }
+}
+
+
+/* show all */
+/* General Page Layout */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure body takes at least the full height of the viewport */
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding-bottom: 50px; /* Add padding at the bottom to ensure space for the footer */
+}
+
+/* Header Styles */
+h1 {
+    color: #343a40;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center; /* Center align the header */
+}
+
+/* Create New Button */
+p a {
+    background-color: #007bff; /* Blue background */
+    color: #ffffff; /* White text */
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+    margin-top: 20px; /* Add space above the button */
+}
+
+    p a:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+/* Table Styles */
+.table {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .table th, .table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .table thead {
+        background-color: #007bff;
+        color: #ffffff;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .table tbody tr:hover {
+        background-color: #e9ecef;
+    }
+
+    /* Link Styles within Table */
+    .table a {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+        .table a:hover {
+            text-decoration: underline;
+        }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .table th, .table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    p a {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
