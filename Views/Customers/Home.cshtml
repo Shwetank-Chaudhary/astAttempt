@@ -18,26 +18,18 @@
     <div class="container">
         <h1>Customer Dashboard</h1>
 
-        <div class="section">
-            <h2>Manage Your Details</h2>
-            <a class="btn btn-primary" href="/Customer/Add">
-                <i class="fas fa-user-plus"></i> Add Your Details
-            </a>
-            <a class="btn btn-secondary" href="/Customer/Update">
-                <i class="fas fa-user-edit"></i> Update Your Details
-            </a>
-        </div>
-
+        
         <div class="section">
             <h2>View Your Orders</h2>
-            <a class="btn btn-primary" href="/Order/ViewAll">
-                <i class="fas fa-box"></i> View All Orders
-            </a>
+            <form method="get" action="../../api/cargoorderdetails/showbyprice">
+                <input type="text" class="search-bar" name="query" placeholder="Search by price">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+            @* <a class="btn btn-primary" href="..api/cargoorderdetails/showbyprice">
+                <i class="fas fa-box"></i> Search by price
+            </a> *@
         </div>
     </div>
 
-    <footer>
-        &copy; 2024 Cargo Manager System
-    </footer>
 </body>
 </html>

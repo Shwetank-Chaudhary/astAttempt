@@ -34,13 +34,13 @@ namespace astAttempt.Controllers
             if (ModelState.IsValid)
             {
                 var employee = await _context.UserMasters
-                    .FirstOrDefaultAsync(e => e.UserID == model.UserName && e.UserPassword == model.Password);
+                    .FirstOrDefaultAsync(e => e.UserName == model.UserName && e.UserPassword == model.Password);
 
                 if (employee != null)
                 {
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, employee.UserID),
+                        new Claim(ClaimTypes.Name, employee.UserName),
                         new Claim(ClaimTypes.Role, "Employee")
                     };
 
@@ -49,7 +49,7 @@ namespace astAttempt.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimsIdentity));
 
-                    return RedirectToAction("Details", "Employee", new { id = employee.UserID });
+                    return RedirectToAction("Details", "Employee", new { id = employee.UserName });
                     //return RedirectToAction("show","Emp");
                 }
                 else

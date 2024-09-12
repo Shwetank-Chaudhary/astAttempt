@@ -24,6 +24,14 @@ namespace astAttempt.Controllers
             _context = context;
         }
 
+        //[Authorize(Roles = "Employee")]
+        [HttpPost]
+        [Route("home")]
+        public async Task<IActionResult> Home()
+        {
+            return View();
+        }
+
         // GET: Employees
         [HttpGet]
         [Route("showall")]
@@ -31,6 +39,10 @@ namespace astAttempt.Controllers
         {
             return View(await _context.Employees.ToListAsync());
         }
+
+
+
+
         [HttpPost]
         [Route("show")]
         public async Task<IActionResult> Details([FromForm] string EmpEmail, [FromForm] string Password)
@@ -47,7 +59,7 @@ namespace astAttempt.Controllers
 
         //[Authorize(Roles = "Employee, Admin")]
         [HttpGet]
-        [Route("show")]
+        [Route("show/{query?}")]
         public async Task<IActionResult> Details(int? query)
         {
             if (query == null)
@@ -64,6 +76,27 @@ namespace astAttempt.Controllers
 
             return View(employee);
         }
+
+        [HttpGet]
+        [Route("showone")]
+        public async Task<IActionResult> SearchResult(int? query)
+        {
+            if (query == null)
+            {
+                return NotFound();
+            }
+
+            var employee = await _context.Employees
+                .FirstOrDefaultAsync(m => m.EmpId == query);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return View(employee);
+        }
+
+
 
         // GET: Employees/Create
         [Authorize(Roles = "Admin")]

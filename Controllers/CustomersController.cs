@@ -28,6 +28,11 @@ namespace astAttempt.Controllers
             _context = context;
         }
 
+        //[HttpPost]
+        //[Route("home")]
+        //public async Task<IActionResult> Home() {
+        //    return View();
+        //}
 
         [HttpGet]
         [Route("showall/")]
@@ -67,6 +72,21 @@ namespace astAttempt.Controllers
         }
 
 
+        [HttpGet]
+        [Route("show")]
+        public async Task<IActionResult> Details(int? query)
+        {
+
+            Customer customer = _context.Customers.SingleOrDefault(c => (c.CustomerId == query));
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            //email_public = CustomerName;
+            return View(customer);
+        }
+
+
 
         [HttpGet]
         [Route("create")]
@@ -83,21 +103,9 @@ namespace astAttempt.Controllers
             return View();
         }
 
-        [HttpPost]
-        [Route("Home")]
-        public async Task<IActionResult> Home([FromBody] string? CustomerEmail)
-        {
-
-            Customer customer = _context.Customers.SingleOrDefault(c => (c.CustomerEmail == CustomerEmail));
-            if (customer == null)
-            {
-                return NotFound("Customer Not Found");
-            }
-
-            return View(customer);
-        }
+        
         [HttpGet]
-        [Route("Home")]
+        [Route("home")]
         public async Task<IActionResult> Home()
         {
 
@@ -189,10 +197,10 @@ namespace astAttempt.Controllers
                         throw;
                     }
                 }
-                //return RedirectToAction(nameof(Customer_Dashboard),customer.CustomerEmail);
+                return View("home");
             }
             ViewData["CityId"] = new SelectList(_context.Citys, "CityId", "CityId", customer.CityId);
-            return RedirectToAction("Home","customers");
+            return View();
         }
 
         [HttpGet]

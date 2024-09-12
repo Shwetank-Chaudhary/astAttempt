@@ -35,18 +35,17 @@ namespace astAttempt.Controllers
         // GET: CargoOrderDetails/Details/5
 
         [HttpGet]
-        [Route("show/{id?}")]
-        public async Task<IActionResult> Details(int? id)
+        [Route("show")]
+        public async Task<IActionResult> Details(int? query)
         {
-            if (id == null)
+            if (query == null)
             {
                 return NotFound();
             }
 
-            var cargoOrderDetails = await _context.CargoOrderDetails
+            var cargoOrderDetails = _context.CargoOrderDetails
                 .Include(c => c.CargoOrder)
-                .Include(c => c.Product)
-                .FirstOrDefaultAsync(m => m.ShippmentId == id);
+                .Include(c => c.Product).Where( c=> c.UnitCost <= query);
             if (cargoOrderDetails == null)
             {
                 return NotFound();

@@ -42,7 +42,7 @@
             <div class="tab active" onclick="showForm('login')"><h2>Login</h2></div>
             @* <div class="tab" onclick="showForm('register')">Register</div> *@
         </div>
-        <form class="form active" asp-controller="Employees" asp-action="show" method="post">
+        <form class="form active" asp-controller="Employees" asp-action="Home" method="post">
             <div class="form-group">
                 <label label asp-for="EmpEmail">Email:</label>
                 <input type="text" id="loginEmail" asp-for="EmpEmail" required>

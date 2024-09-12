@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using astAttempt.Data;
 using astAttempt.Models.Entity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace astAttempt.Controllers
 {
 
     [ApiController]
     [Route("/api/[Controller]")]
+    [Authorize(Roles = "Admin")]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;

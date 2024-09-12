@@ -21,9 +21,9 @@ namespace astAttempt
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/AccAdmin/LoginAdmin"; // Default login path
-                    options.LogoutPath = "/AccAdmin/Logout"; // Default logout path
-                    options.AccessDeniedPath = "/AccAdmin/AccessDenied"; // Access denied path
+                   // options.LoginPath = "/Account/Login/"; // Default login path
+                    options.LogoutPath = "/Logout"; // Default logout path
+                    options.AccessDeniedPath = "/Shared/AccessDenied/"; // Access denied path
                 });
 
             builder.Services.AddAuthorization(options =>
@@ -53,7 +53,7 @@ namespace astAttempt
 
             if (!app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("~/Shared/Error");
                 app.UseHsts();
             }
 
