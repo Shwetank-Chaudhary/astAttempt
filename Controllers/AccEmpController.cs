@@ -4,11 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using astAttempt.Data;
-using astAttempt.Models;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace astAttempt.Controllers
 
@@ -54,6 +50,7 @@ namespace astAttempt.Controllers
                         new ClaimsPrincipal(claimsIdentity));
 
                     return RedirectToAction("Details", "Employee", new { id = employee.UserID });
+                    //return RedirectToAction("show","Emp");
                 }
                 else
                 {

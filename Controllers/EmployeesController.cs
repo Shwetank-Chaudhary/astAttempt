@@ -47,16 +47,16 @@ namespace astAttempt.Controllers
 
         //[Authorize(Roles = "Employee, Admin")]
         [HttpGet]
-        [Route("show/{id?}")]
-        public async Task<IActionResult> Details(int? id)
+        [Route("show")]
+        public async Task<IActionResult> Details(int? query)
         {
-            if (id == null)
+            if (query == null)
             {
                 return NotFound();
             }
 
             var employee = await _context.Employees
-                .FirstOrDefaultAsync(m => m.EmpId == id);
+                .FirstOrDefaultAsync(m => m.EmpId == query);
             if (employee == null)
             {
                 return NotFound();
@@ -153,7 +153,14 @@ namespace astAttempt.Controllers
             {
                 return BadRequest();
             }
-
+            UserMaster user = new UserMaster()
+            {
+                UserID = emp.EmpId.ToString(),
+                UserName = emp.EmpEmail,
+                UserPassword = emp.Password,
+                UserType = emp.Role
+            };
+            _context.UserMasters.Remove(user);
             _context.Employees.Remove(emp);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
